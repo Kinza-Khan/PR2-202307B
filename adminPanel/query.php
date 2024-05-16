@@ -1,6 +1,5 @@
 <?php
 include('dbcon.php');
-
 if(isset($_POST['addCategory'])){
     $categoryName = $_POST['cName'];
     $categoryDes = $_POST['cDes'];
@@ -26,10 +25,7 @@ if(isset($_POST['addCategory'])){
     }
 
 }
-
-
 // edit category
-
 if(isset($_POST['editCategory'])){
     $cId = $_GET['id'];
     $categoryName = $_POST['cName'];
@@ -84,4 +80,39 @@ if(isset($_POST['addProduct'])){
     }
 
 }
+
+// edit Product
+
+        if(isset($_POST['editProduct'])){
+            $productId = $_GET['id'];
+            $productName = $_POST['pName'];
+            $productPrice = $_POST['pPrice'];
+            $productDes = $_POST['pDes'];
+            $productQty = $_POST['pQty'];
+            $categoryId = $_POST['cId'];
+            $query = $pdo->prepare("update products set name = :pName , price = :pPrice , des = :pDes , qty = :pQty , c_id = :cId where id = :pId");
+            if(isset($_FILES['pImage'])){
+                    $pImageName = $_FILES['pImage']['name'];
+                    $pImageTmpName = $_FILES['pImage']['tmp_name'];
+                    $extension = pathinfo($pImageName,PATHINFO_EXTENSION);
+                    $destination = "img/".$pImageName;
+                    if($extension == "jpg" || $extension == "png" || $extension == "jpeg" || $extension == "webp"){
+                            if(move_uploaded_file($pImageTmpName,$destination)){
+                                    $query = $pdo->prepare("update products set name = :pName , price = :pPrice , des = :pDes , qty = :pQty , c_id = :cId , image = :pImage where id = :pId");
+                                    $query->bindParam('pImage',$pImageName);
+                            }
+                    }
+            }
+            $query->bindParam('pId',$productId);
+            $query->bindParam('pName',$productName);
+            $query->bindParam('pPrice',$productPrice);
+            $query->bindParam('pDes',$productDes);
+            $query->bindParam('pQty',$productQty);
+            $query->bindParam('cId',$categoryId);
+            $query->execute();
+            echo "<script>alert('product upfated successfully')</script>";
+        }
+
+
+
 ?>

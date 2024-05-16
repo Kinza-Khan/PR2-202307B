@@ -39,6 +39,8 @@ include('header.php');
                                     <td ><?php echo $product['qty']?></td>
                                     <td><?php echo $product['categoryName']?></td>
                                     <td><img height="100px" src="img/<?php echo $product['image']?>" alt=""></td>
+                                    <td><a class="btn btn-primary" href="editProduct.php?id=<?php echo $product['id']?>">Edit</a></td>
+                                    <td></td>
                                 </tr>
                                 <?php
                                 }
