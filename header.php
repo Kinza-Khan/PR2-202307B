@@ -105,8 +105,19 @@
 							</li>
 
 							<li>
-								<a href="contact.html">Contact</a>
+								<a href="contact.html">Contactttt</a>
 							</li>
+
+							<?php
+							if(isset($_SESSION['userEmail'])){
+								?>
+								<li>
+								<a href="logout.php">logout</a>
+							</li>		
+								<?php
+							}
+							
+							?>
 						</ul>
 					</div>	
 
