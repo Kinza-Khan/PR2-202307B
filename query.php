@@ -41,7 +41,5 @@ if(isset($_POST['userLogin'])){
     }
     
 
-
-
 }
 ?>
